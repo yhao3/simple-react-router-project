@@ -1,62 +1,120 @@
-# Getting Started with Create Simple React Router App
-## Github
-https://github.com/remix-run/react-router/blob/main/docs/getting-started/tutorial.md
-## install vue-router-dom
-```
-cd simple-react-router-project
-npm install vue-router-dom@6
-```
-## 原始靜態頁面請看: 
-- src/orgin/home.html
-- src/orgin/about.html
-## Hint
-1. 將固定顯示的區塊，寫在 App.jsx
-    ```jsx
-    - class ⮕ className
-    - style="..." ⮕ style={{ ... }}
-    ```
-2. 把不同的展示區，拆分成多個元件
-    ## 關鍵: 
-    - step1: 點擊超連結，影響路徑
-    - step2: 監測路徑變化，同步切換元件
-## STEP
-### `App.jsx`
-1. import `Link` component from `react-router-dom` package
-    - 使用「{}」import，因為 react-router-dom 一定是 export 很多元件（使用分別export），所以我們要用哪個，就用「{}」取哪個即可
-    ```jsx
-    import { Link } from 'react-router-dom';
-    ```
-2. 使用上面 import 的 Link 元件來實現在 React 中切換元件
-    ```jsx
-    <Link className="list-group-item" to="/about">About</Link>
-    <Link className="list-group-item" to="/home">Home</Link>
-    ```
-3. 再 import `BrowserRouter`，並將"所有" Link 元件包起來，並加上 `to="/xxx"` 屬性及其路徑值(代表點擊路徑會變成xxx)
-    ```jsx
-    import { Link,  BrowserRouter} from 'react-router-dom';
-    ...
-    <BrowserRouter>
-        <Link className="list-group-item" to="/about">About</Link>
-        <Link className="list-group-item" to="/home">Home</Link>
-    </BrowserRouter>
-    ```
-4. immport `Home` & `About` component
-    ```jsx
-    import Home from "./component/Home";
-    import About from "./component/About";
-    ```
-5. 要依照路徑切換元件，因此要 import `Route` ，並將 `Home` & `About` 註冊路由，並加上 `path="/xxx"` 及 `element={<元件名 />}` 兩屬性，又因為有多個 Route ，因此要在 import `, Routes` 將所有 `Route` 包起來
-    ```jsx
-    import { Link, Route, Routes } from 'react-router-dom';
-    ...
-    <Routes>
-        <Route path="/about" component={About} />
-        <Route path="/home" component={Home} />
-    </Routes>
-    ```
-6. 又因為 <Routes> 也必須被 <BrowserRouter> 包起來，且 <BrowserRouter> 必須是和上面的 <BrowserRouter> 是同一個！因此最偷懶的做法是直接到 src 下的 index.js 把整個 <App/> 包起來 
-    ```jsx
-    import { BrowserRouter } from 'react-router-dom';
-    ...
-    ReactDOM.render( <BrowserRouter><App/></BrowserRouter>, document.getElementById('root') )
-    ```
+# ver2.0 拆分「路由元件」及「一般元件」
+## 路由元件及一般元件的差異
+1. 寫法不同
+    - 一般元件: 
+        ```jsx
+        <Xxx />
+        ```
+    - 路由元件: 
+        ```jsx
+        <Routes>
+            <Route path="/xxx" element={<Xxx />} />
+            <Route path="/yyy" element={<Yyy />} />
+            ...
+        </Routes>
+        ```
+2. 存放位置不同: 
+    - 一般元件: `src`/`components`
+    - 路由元件: `src`/`pages`
+3. ❌接收到的 props 不同: 
+    - 一般元件: 用元件時傳遞什麼，就能收到什麼
+    - 路由元件: 接收到三個固定的 props...(新版的已改掉)
+    
+    - 新版: (待求證)
+        1. 目錄結構
+            ```
+            BrowserRouter
+                └-- Router ------------------------------ (1)
+                    └-- Navigation.Provider ------------- (2)
+                        └-- Location.Provider ----------- (3)
+                            └-- App
+                                └-- Link ForwardRef ----- (4)
+                                └-- Link ForwardRef ----- (5)
+                                └-- Routes
+                                    └-- Route.Provider
+                                        └-- About
+            ```
+        2. props
+            ```
+            (1) Router: 
+                {
+                    "children": "<App />",
+                    "location": {
+                        "pathname": "/about",
+                        "search": "",
+                        "hash": "",
+                        "state": null,
+                        "key": "kj6u526k"
+                    },
+                    "navigationType": "POP",
+                    "navigator": {
+                        "action": "POP",
+                        "location": "{
+                            hash: \"\", 
+                            key: \"kj6u526k\", 
+                            pathname: \"/about\", 
+                            sea…
+                        }",
+                        "createHref": "ƒ createHref() {}",
+                        "push": "ƒ push() {}", ⭐️
+                        "replace": "ƒ replace() {}", ⭐️
+                        "go": "ƒ go() {}", ⭐️
+                        "back": "ƒ back() {}", ⭐️
+                        "forward": "ƒ forward() {}", ⭐️
+                        "listen": "ƒ listen() {}",
+                        "block": "ƒ block() {}"
+                    }
+                }
+            (2) Navigation.Provider: 
+                {
+                    "value": {
+                        "basename": "/",
+                        "navigator": {
+                            "action": "POP",
+                            "location": {
+                                "pathname": "/about", ⭐️
+                                "search": "", ⭐️
+                                "hash": "", 
+                                "state": null, ⭐️
+                                "key": "kj6u526k"
+                            },
+                            "createHref": "ƒ createHref() {}",
+                            "push": "ƒ push() {}", ⭐️
+                            "replace": "ƒ replace() {}", ⭐️
+                            "go": "ƒ go() {}", ⭐️
+                            "back": "ƒ back() {}", ⭐️
+                            "forward": "ƒ forward() {}", ⭐️
+                            "listen": "ƒ listen() {}",
+                            "block": "ƒ block() {}"
+                        },
+                        "static": false
+                    },
+                    "children": "<ContextProvider />"
+                }
+            (3) Location.Provider: 
+                {
+                    "children": "<App />",
+                    "value": {
+                        "location": {
+                            "pathname": "/about", ⭐️
+                            "search": "", ⭐️
+                            "hash": "",
+                            "state": null, ⭐️
+                            "key": "kj6u526k"
+                        },
+                        "navigationType": "POP"
+                    }
+                }
+            (4) Link ForwardRef: 
+                {
+                    "className": "list-group-item",
+                    "to": "/about",
+                    "children": "About"
+                }
+            (5) Link ForwardRef: 
+                {
+                    "className": "list-group-item",
+                    "to": "/home",
+                    "children": "Home"
+                } 
+            ```
