@@ -1,70 +1,62 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Getting Started with Create Simple React Router App
+## Github
+https://github.com/remix-run/react-router/blob/main/docs/getting-started/tutorial.md
+## install vue-router-dom
+```
+cd simple-react-router-project
+npm install vue-router-dom@6
+```
+## 原始靜態頁面請看: 
+- src/orgin/home.html
+- src/orgin/about.html
+## Hint
+1. 將固定顯示的區塊，寫在 App.jsx
+    ```jsx
+    - class ⮕ className
+    - style="..." ⮕ style={{ ... }}
+    ```
+2. 把不同的展示區，拆分成多個元件
+    ## 關鍵: 
+    - step1: 點擊超連結，影響路徑
+    - step2: 監測路徑變化，同步切換元件
+## STEP
+### `App.jsx`
+1. import `Link` component from `react-router-dom` package
+    - 使用「{}」import，因為 react-router-dom 一定是 export 很多元件（使用分別export），所以我們要用哪個，就用「{}」取哪個即可
+    ```jsx
+    import { Link } from 'react-router-dom';
+    ```
+2. 使用上面 import 的 Link 元件來實現在 React 中切換元件
+    ```jsx
+    <Link className="list-group-item" to="/about">About</Link>
+    <Link className="list-group-item" to="/home">Home</Link>
+    ```
+3. 再 import `BrowserRouter`，並將"所有" Link 元件包起來，並加上 `to="/xxx"` 屬性及其路徑值(代表點擊路徑會變成xxx)
+    ```jsx
+    import { Link,  BrowserRouter} from 'react-router-dom';
+    ...
+    <BrowserRouter>
+        <Link className="list-group-item" to="/about">About</Link>
+        <Link className="list-group-item" to="/home">Home</Link>
+    </BrowserRouter>
+    ```
+4. immport `Home` & `About` component
+    ```jsx
+    import Home from "./component/Home";
+    import About from "./component/About";
+    ```
+5. 要依照路徑切換元件，因此要 import `Route` ，並將 `Home` & `About` 註冊路由，並加上 `path="/xxx"` 及 `element={<元件名 />}` 兩屬性，又因為有多個 Route ，因此要在 import `, Routes` 將所有 `Route` 包起來
+    ```jsx
+    import { Link, Route, Routes } from 'react-router-dom';
+    ...
+    <Routes>
+        <Route path="/about" component={About} />
+        <Route path="/home" component={Home} />
+    </Routes>
+    ```
+6. 又因為 <Routes> 也必須被 <BrowserRouter> 包起來，且 <BrowserRouter> 必須是和上面的 <BrowserRouter> 是同一個！因此最偷懶的做法是直接到 src 下的 index.js 把整個 <App/> 包起來 
+    ```jsx
+    import { BrowserRouter } from 'react-router-dom';
+    ...
+    ReactDOM.render( <BrowserRouter><App/></BrowserRouter>, document.getElementById('root') )
+    ```
