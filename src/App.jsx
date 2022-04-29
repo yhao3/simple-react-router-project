@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import Home from "./pages/Home";
 import About from "./pages/About";
 import MyNavLink from "./component/MyNavLink";
+import About2 from "./pages/About2";
 
 export default class App extends Component {
   render() {
@@ -41,6 +42,7 @@ export default class App extends Component {
                 <Routes>
                   <Route path="/home" element={<Home />} />
                   <Route path="/about" element={<About />} />
+                  <Route path="/about" element={<About2 />} />
                 </Routes>
               </div>
             </div>
