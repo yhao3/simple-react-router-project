@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { NavLink, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Home from "./pages/Home";
 import About from "./pages/About";
+import MyNavLink from "./component/MyNavLink";
 
 export default class App extends Component {
   render() {
@@ -26,8 +27,11 @@ export default class App extends Component {
               {/* <NavLink className="list-group-item" to="/about">About</NavLink>
               <NavLink className="list-group-item" to="/home">Home</NavLink> */}
               {/* 使用自定義 css */}
-              <NavLink className={ ({isActive}) => 'list-group-item' + (isActive ? ' myHighlight' : '') }  to="/about">About</NavLink>
-              <NavLink className={ ({isActive}) => 'list-group-item' + (isActive ? ' myHighlight' : '') }  to="/home">Home</NavLink>
+              {/* <NavLink className={ ({isActive}) => 'list-group-item' + (isActive ? ' myHighlight' : '') }  to="/about">About</NavLink>
+              <NavLink className={ ({isActive}) => 'list-group-item' + (isActive ? ' myHighlight' : '') }  to="/home">Home</NavLink> */}
+              {/* 封裝 NavLink */}
+              <MyNavLink to="/home">Home</MyNavLink>
+              <MyNavLink to="/about">About</MyNavLink>
               
             </div>
           </div>
