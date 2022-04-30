@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import Home from "./pages/Home";
 import About from "./pages/About";
 import MyNavLink from "./component/MyNavLink";
-import About2 from "./pages/About2";
 
 export default class App extends Component {
   render() {
@@ -31,7 +30,7 @@ export default class App extends Component {
               {/* <NavLink className={ ({isActive}) => 'list-group-item' + (isActive ? ' myHighlight' : '') }  to="/about">About</NavLink>
               <NavLink className={ ({isActive}) => 'list-group-item' + (isActive ? ' myHighlight' : '') }  to="/home">Home</NavLink> */}
               {/* 封裝 NavLink */}
-              <MyNavLink to="/home/a">Home</MyNavLink>
+              <MyNavLink to="/home">Home</MyNavLink>
               <MyNavLink to="/about">About</MyNavLink>
               
             </div>
@@ -40,9 +39,10 @@ export default class App extends Component {
             <div className="panel">
               <div className="panel-body">
                 <Routes>
-                  <Route path="/home/a" element={<Home />} />
+                  <Route path="/home" element={<Home />} />
                   <Route path="/about" element={<About />} />
-                  <Route path="/about" element={<About2 />} />
+                  {/* Redirect 當上方都匹配失敗，就導向 /home */}
+                  <Route path="*" element={<Navigate to ="/home" />} />
                 </Routes>
               </div>
             </div>
