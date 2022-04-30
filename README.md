@@ -1,6 +1,18 @@
-# ver5.0 使用 `switch` 元件改善通透性問題
-## ⚠️注意
-新版用 `Routes` 包住所有 `Route` 後已無此問題，無需使用`switch` 
-## 問題引入
-- 若同時有多個 Route 元件的 path 值相同，則會全部匹配顯示於頁面，存在效能問題，而不像 switch 加上 break 後，一匹配就跳出
-- 因此我們可以 import Switch 元件將所有 Route 元件包起來優化
+# ver6.0 path 的 精準匹配 與 模糊匹配
+- 新版默認為「精準匹配」，如果想使用模糊匹配可以在 path路徑加上 `/*` ，例如: 
+    ```jsx
+    <Route path="/home/a/*" element={<Home />} />
+    ```
+    此時以下 NavLink 都可以匹配成功: 
+    ```jsx
+    // 匹配成功:
+    <NavLink to="/home/a">Home</NavLink>
+    <NavLink to="/home/a/b">Home</NavLink> // 多給 -> ok
+
+    // 匹配失敗:
+    <NavLink to="/home">Home</NavLink>     // 少給 -> no
+    <NavLink to="a/home">Home</NavLink> 
+    ```
+    💬關鍵: 
+    - 精準匹配: 不可多給，也不可少給
+    - 模糊匹配: 可以多給，不可少給

@@ -31,7 +31,7 @@ export default class App extends Component {
               {/* <NavLink className={ ({isActive}) => 'list-group-item' + (isActive ? ' myHighlight' : '') }  to="/about">About</NavLink>
               <NavLink className={ ({isActive}) => 'list-group-item' + (isActive ? ' myHighlight' : '') }  to="/home">Home</NavLink> */}
               {/* 封裝 NavLink */}
-              <MyNavLink to="/home">Home</MyNavLink>
+              <MyNavLink to="/home/a">Home</MyNavLink>
               <MyNavLink to="/about">About</MyNavLink>
               
             </div>
@@ -40,7 +40,7 @@ export default class App extends Component {
             <div className="panel">
               <div className="panel-body">
                 <Routes>
-                  <Route path="/home" element={<Home />} />
+                  <Route path="/home/a" element={<Home />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/about" element={<About2 />} />
                 </Routes>
