@@ -3,6 +3,7 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import Home from "./pages/Home";
 import About from "./pages/About";
 import MyNavLink from "./component/MyNavLink";
+import Tags from "./pages/Home/Tags";
 
 export default class App extends Component {
   render() {
@@ -39,8 +40,10 @@ export default class App extends Component {
             <div className="panel">
               <div className="panel-body">
                 <Routes>
-                  <Route path="/home" element={<Home />} />
-                  <Route path="/about" element={<About />} />
+                  {/* <Route path="/home" element={<Home />} /> */}
+                  {/* ve8.0 home 改成「模糊匹配」 */}
+                  <Route path="/home/*" element={ <Home /> } />
+                  <Route path="/about" element={ <About /> } />
                   {/* Redirect 當上方都匹配失敗，就導向 /home */}
                   <Route path="*" element={<Navigate to ="/home" />} />
                 </Routes>
