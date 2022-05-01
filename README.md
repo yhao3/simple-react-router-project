@@ -10,7 +10,7 @@ Home 頁面中包含 2 個子頁面，分別為 Tags 及 Posts
     <Route path="/home/*" element={<Home />} />
     ```
 1. 在 Home 資料夾中新建 Tags 及 Posts 資料夾並分別建立元件
-2. 將傳統 Home 頁面中的 Tags 及 Posts 的 `<a>` 標籤，改成 `<NavLink>` 元件，在此使用 ver4.0 封裝的 `<MyNavLink>` 元件
+2. 將傳統 Home 頁面中的 Tags 及 Posts 的 `<a>` 標籤，改成 `<NavLink>` 元件，在此使用 ver4.0 封裝的 `<MyNavLink>` 元件，並將 `href` 屬性改成 `to` 屬性
 3. 又因為 Route 的註冊是有先後順序的，所以 to 屬性的值必須加上前綴 `/home` ，在 App.jsx 中匹配時才能和 模糊匹配 `/home/*` 匹配成功
     - `Home`
     ```jsx
