@@ -1,27 +1,20 @@
-# ver9.0 向路由元件傳遞參數（待捕）
-## ⚠️注意: react-router-dom v6.x 版本採用 `useXxx` hook 的方式來向路由元件傳遞參數， 之後學到 hook 再補課
-## 向路由元件傳遞 params 參數（待捕）
-### ⚠️注意: 
-react-router-dom v6.x 版本採用 `useParams` hook 的方式來向路由元件傳遞 params 參數，但 hook 不能在 類式元件 中使用，只能使用 函式元件，如下: 
-- `Details`
+# ver10.0 push 與 replace（待補）
+# ver11.0 withRouter 的使用（待補）
+React v6.x 中 withRouter 已被移除，改使用函式元件: 
 ```jsx
-import {useParams} from 'react-router-dom'
-export default function Details () {
-    const {id, title} = useParams();
-    const findDetailsData = DetailsData.find(item => item.id === Number(id));
-    return (
-        <ul>
-            <li>ID: {id}</li>
-            <li>Title: {title}</li>
-            <li>Content: {findDetailsData.content}</li>
-        </ul>
-    )
+export default function Header() {
+  const navigate = useNavigate()
+  const go =() => {
+    navigate(-2);
+  }
+  return (
+    <div className="page-header">
+           <h2>React Router Demo</h2>
+           <button onClick={()=> navigate(-1)}>Back</button>
+           <button onClick={()=> navigate(1)}>Forward</button>
+           <button onClick={go}>Go</button>
+           </div>
+  )
 }
 ```
-## 向路由元件傳遞 search 參數（待捕）
-
-## 向路由元件傳遞 state 參數（待捕）
-```jsx
-<Link to={"details"} state={{ id: item.id, title: item.title }}>{item.title}</Link>
-获取state方法使用hook，const { state } = useLocation();
-```
+# ver12.0 BroeserRouter 與 HashRouter（待補）
